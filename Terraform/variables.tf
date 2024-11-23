@@ -8,6 +8,11 @@ variable "vpc_cidr" {
   default     = "10.0.0.0/16"
 }
 
+variable "ecr_cluster_name" {
+  description = "Name of the ECR cluster"
+  default     = "nginx-web-application-ecr"
+}
+
 variable "eks_cluster_name" {
   description = "Name of the EKS cluster"
   default     = "nginx-web-application-eks"

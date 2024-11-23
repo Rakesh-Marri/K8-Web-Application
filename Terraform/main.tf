@@ -126,6 +126,16 @@ resource "aws_iam_role_policy_attachment" "eks_AmazonEKS_CNI_Policy" {
   role       = aws_iam_role.eks_node_role.name
 }
 
+# creating ECR repo for storing Docker images
+resource "aws_ecr_repository" "web_application_ecr" {
+  name = var.ecr_cluster_name
+
+  image_tag_mutability = "MUTABLE"
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 # creating EKS cluster for deploying web application
 resource "aws_eks_cluster" "web_application_eks" {
   name     = var.eks_cluster_name

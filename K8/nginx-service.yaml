@@ -4,9 +4,9 @@ metadata:
   name: nginx-service
 spec:
   selector:
-    app: nginx  # This should match the label defined in Deployment
+    app: nginx
   ports:
     - protocol: TCP
-      port: 80  # The port that the service will expose
-      targetPort: 80  # The port that the container listens on
-  type: ClusterIP  # Exposes the service within the cluster
+      port: 80 
+      targetPort: 80 
+  type: ClusterIP
