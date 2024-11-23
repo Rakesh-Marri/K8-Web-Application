@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce  # This claim can only be mounted by one pod at a time
+  resources:
+    requests:
+      storage: 5Gi  # This is the size of the volume the claim requests
+  storageClassName: ebs-sc  # Storage class for the PVC
