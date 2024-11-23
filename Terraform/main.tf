@@ -62,6 +62,8 @@ resource "aws_security_group" "web_application_security_group" {
   }
 }   
 
+# creating role for EKS cluster
+
 resource "aws_iam_role" "eks_cluster_role" {
   name = "eks-cluster-role"
 
@@ -89,6 +91,7 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_policy_attachment" {
   role       = aws_iam_role.eks_cluster_role.name
 }
 
+# creating role for EKS node
 resource "aws_iam_role" "eks_node_role" {
   name = "eks-node-role"
 
