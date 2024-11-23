@@ -6,6 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
+  # hostname of nginx configured in AWS route 53
   - host: devops-assignment.dev
     http:
       paths:
@@ -13,6 +14,7 @@ spec:
         pathType: Prefix
         backend:
           service:
+            # name of the nginx service
             name: nginx-service
             port:
               number: 80

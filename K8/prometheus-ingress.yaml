@@ -6,13 +6,16 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
+  # hostname of nginx configured in AWS route 53
   - host: devops-assignment.dev
     http:
       paths:
+      # context path for routing prometheus UI
       - path: /prometheus
         pathType: Prefix
         backend:
           service:
+          # service name of prometheus
             name: prometheus-service
             port:
               number: 80

@@ -3,9 +3,11 @@ kind: Service
 metadata:
   name: prometheus-service
 spec:
+  # match with prometheus pod
   selector:
     app: prometheus
   ports:
     - protocol: TCP
       port: 9090
+  # ClusterIP for internal connection
   type: ClusterIP

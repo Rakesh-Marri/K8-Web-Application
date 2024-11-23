@@ -4,12 +4,16 @@ metadata:
   name: nginx-ebs-pv
 spec:
   capacity:
-    storage: 5Gi
+    storage: 2Gi
   volumeMode: Filesystem
+  # volume can be mounted by only one node at a time
   accessModes:
-    - ReadWriteOnce  # Ensures the volume can be mounted by only one node at a time
-  persistentVolumeReclaimPolicy: Retain  # What happens to the volume after PVC deletion
-  storageClassName: ebs-sc  # Storage class that specifies EBS
+    - ReadWriteOnce  
+  persistentVolumeReclaimPolicy: Retain
+  # name of the storage class created for ebs
+  storageClassName: ebs-sc
   csi:
-    driver: ebs.csi.aws.com  # AWS EBS CSI Driver
-    volumeHandle: <volume-id>  # The ID of the existing EBS volume
+    # ebs driver name
+    driver: ebs.csi.aws.com
+    # volume id of ebs
+    volumeHandle: <volume-id>

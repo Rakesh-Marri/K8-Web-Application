@@ -3,9 +3,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: nginx-pvc
 spec:
+  # volume can be mounted by only one node at a time
   accessModes:
-    - ReadWriteOnce  # This claim can only be mounted by one pod at a time
+    - ReadWriteOnce
   resources:
+  # storage required for mounting nginx and prometheus containers
     requests:
-      storage: 5Gi  # This is the size of the volume the claim requests
-  storageClassName: ebs-sc  # Storage class for the PVC
+      storage: 2Gi
+  # name of the storageclass
+  storageClassName: ebs-sc

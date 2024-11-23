@@ -1,8 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  # name of the deployment
   name: nginx-deployment
 spec:
+  # number of deployment replicas
   replicas: 3
   selector:
     matchLabels:
@@ -13,23 +15,27 @@ spec:
         app: nginx
     spec:
       containers:
+      # name of the container
       - name: nginx
-        image: <image>
+      # ECR image to be used
+        image: <aws_account_id>.dkr.ecr.us-west-2.amazonaws.com/nginx-web-application-ecr/nginx:1.0
         ports:
         - containerPort: 80
+      # sidecar prometheus exporter container for monitoring
       - name: nginx-prometheus-exporter
         image: nginx/nginx-prometheus-exporter:0.10.0
         ports:
           - containerPort: 9113
         args:
-          - '-nginx.scrape-uri=http://localhost:80/stub_status'
-    volumeMounts:
-    - name: nginx-storage
-      mountPath: /usr/share/nginx/html
-    - name: nginx-storage
-      mountPath: /etc/nginx
-      subPath: nginx.conf
-  volumes:
-  - name: nginx-storage
-    persistentVolumeClaim:
-      claimName: nginx-pvc
+          - '-nginx.scrape-uri=http://localhost:80/stub_status'  
+        # mounting nginx index.html and nginx.conf file  
+        volumeMounts:
+        - name: nginx-storage
+          mountPath: /usr/share/nginx/html
+        - name: nginx-storage
+          mountPath: /etc/nginx
+          subPath: nginx.conf
+      volumes:
+      - name: nginx-storage
+        persistentVolumeClaim:
+          claimName: nginx-pvc

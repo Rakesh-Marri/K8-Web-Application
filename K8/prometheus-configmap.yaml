@@ -5,9 +5,9 @@ metadata:
 data:
   prometheus.yml: |
     global:
-      scrape_interval: 15s  # Scrape metrics every 15 seconds
+      scrape_interval: 15s # 15 seconds interval for scrapping
 
     scrape_configs:
       - job_name: 'nginx'
         static_configs:
-          - targets: ['nginx-service:80']
+          - targets: ['nginx-service:80'] # service and port of nginx

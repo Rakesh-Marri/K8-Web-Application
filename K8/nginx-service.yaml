@@ -3,10 +3,12 @@ kind: Service
 metadata:
   name: nginx-service
 spec:
+  # match with nginx pod
   selector:
     app: nginx
   ports:
     - protocol: TCP
       port: 80 
-      targetPort: 80 
+      targetPort: 80
+  # ClusterIP for internal connection
   type: ClusterIP
