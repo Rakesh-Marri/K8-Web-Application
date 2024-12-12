@@ -1,0 +1,47 @@
+- name: update and upgrade apt
+  ansible.builtin.apt:
+    upgrade: yes
+
+- name: installing nginx version "{{ nginx_version }}"
+  ansible.builtin.apt:
+    name: "nginx={{ nginx_version }}"
+    state: present
+
+- name: copy the nginx configuration file
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+
+- name: enable the symlink
+  ansible.builtin.file:
+    dest: /etc/nginx/sites-enabled/default
+    src: /etc/nginx/sites-available/default
+    state: link
+
+- name: create nginx directory
+  ansible.builtin.file:
+    path: "{{ nginx_custom_directory }}"
+    state: directory
+
+- name: copy the index.html file
+  ansible.builtin.copy:
+    src: index.html
+    dest: "{{ nginx_custom_directory }}/index.html"
+  notify: restart nginx
+
+- name: Install other tools
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+    loop:
+      - http
+      - wget
+      - tree
+
+- name: ensure services are running
+  ansible.builtin.service:
+    name: "{{ item.key }}"
+    state: "{{ item.value.state }}"
+    enabled: "{{ item.value.enabled | default('yes') }}"
+  loop: "{{ lookup('dict', services) }}"
+  #loop: "{{ services | dict2items }}"
